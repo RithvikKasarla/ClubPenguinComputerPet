@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import { createConnection } from "node:net";
 import os from "node:os";
 import path from "node:path";
@@ -12,10 +13,37 @@ function defaultSocketPath() {
   return path.join(base, `club-penguin-pet-${uid}.sock`);
 }
 
-export function createHookEnvelope(payload) {
+export function approvalsReviewerFromConfig(config) {
+  if (typeof config !== "string") return null;
+  for (const line of config.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (trimmed.length === 0 || trimmed.startsWith("#")) continue;
+    if (trimmed.startsWith("[")) break;
+    const match = line.match(
+      /^\s*approvals_reviewer\s*=\s*["'](auto_review|user)["']\s*(?:#.*)?$/,
+    );
+    if (match) return match[1];
+  }
+  return null;
+}
+
+async function configuredApprovalsReviewer() {
+  const codexHome = process.env.CODEX_HOME || path.join(os.homedir(), ".codex");
+  try {
+    const config = await readFile(path.join(codexHome, "config.toml"), "utf8");
+    return approvalsReviewerFromConfig(config);
+  } catch {
+    return null;
+  }
+}
+
+export function createHookEnvelope(payload, { approvalsReviewer = null } = {}) {
   if (!payload || typeof payload !== "object") return null;
   if (typeof payload.hook_event_name !== "string") return null;
   if (typeof payload.session_id !== "string" || payload.session_id.length === 0) return null;
+  if (payload.hook_event_name === "PermissionRequest" && approvalsReviewer === "auto_review") {
+    return null;
+  }
   return {
     hook_event_name: payload.hook_event_name,
     session_id: payload.session_id,
@@ -36,7 +64,9 @@ async function main() {
   } catch {
     return;
   }
-  const envelope = createHookEnvelope(payload);
+  const envelope = createHookEnvelope(payload, {
+    approvalsReviewer: await configuredApprovalsReviewer(),
+  });
   if (!envelope) return;
 
   await new Promise((resolve) => {

@@ -121,7 +121,7 @@ The plugin sends a redacted event envelope to a user-only local Unix socket:
 | --- | --- |
 | `UserPromptSubmit` | Working |
 | `PostToolUse` | Working/resume after approval |
-| `PermissionRequest` | Needs input |
+| `PermissionRequest` | Needs input when approvals are reviewed by the user; stays working when `approvals_reviewer = "auto_review"` |
 | `Stop` | Stopped/ready |
 
 Prompt text, transcripts, tool inputs, and approval payloads are discarded by

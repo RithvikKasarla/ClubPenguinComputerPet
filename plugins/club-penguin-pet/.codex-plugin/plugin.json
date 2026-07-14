@@ -1,6 +1,6 @@
 {
   "name": "club-penguin-pet",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Drive the local Club Penguin desktop companion from Codex lifecycle hooks.",
   "hooks": "./hooks/hooks.json"
 }
