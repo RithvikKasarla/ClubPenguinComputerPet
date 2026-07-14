@@ -1,0 +1,160 @@
+export const ACTION_GROUPS = Object.freeze([
+  { id: "idle", label: "Idle", description: "Waiting, listening, or neutral fallback." },
+  { id: "locomotion", label: "Locomotion", description: "Move the pet to a new screen position." },
+  { id: "social", label: "Social", description: "Greet the user or request attention." },
+  { id: "music", label: "Music", description: "Dance, celebrate, or respond to music." },
+  { id: "work", label: "Work", description: "Represent focused or active task work." },
+  { id: "play", label: "Play", description: "Perform a game, stunt, or projectile action." },
+].map(Object.freeze));
+
+const eightDirections = Object.freeze([
+  "down",
+  "down-left",
+  "left",
+  "up-left",
+  "up",
+  "up-right",
+  "right",
+  "down-right",
+]);
+
+const throwDirections = Object.freeze(["down-left", "up-left", "up-right", "down-right"]);
+
+const action = ({
+  label,
+  eyebrow,
+  description,
+  group,
+  directions = [],
+  tags = [],
+  mode = "loop",
+  target = "none",
+}) => Object.freeze({
+  label,
+  eyebrow,
+  description,
+  group,
+  directions: Object.freeze(directions),
+  tags: Object.freeze(tags),
+  mode,
+  target,
+});
+
+export const ACTIONS = Object.freeze({
+  penguin: action({
+    label: "Relax",
+    eyebrow: "Base penguin · idle",
+    description: "A calm neutral pose for waiting between activities.",
+    group: "idle",
+    directions: eightDirections,
+    tags: ["neutral", "fallback"],
+  }),
+  walk: action({
+    label: "Walk Around",
+    eyebrow: "Waddle · cursor directed",
+    description: "Choose this, then click the playground to send the penguin there.",
+    group: "locomotion",
+    directions: eightDirections,
+    tags: ["movement", "cursor-target"],
+    mode: "directed",
+    target: "playground-point",
+  }),
+  wave: action({
+    label: "Wave",
+    eyebrow: "Base penguin · action 24",
+    description: "A friendly social wave using the original penguin timeline.",
+    group: "social",
+    tags: ["greeting", "friendly"],
+    mode: "one-shot",
+  }),
+  dance: action({
+    label: "Dance",
+    eyebrow: "Base penguin · action 25",
+    description: "The full original Club Penguin dance loop.",
+    group: "music",
+    tags: ["dance", "music"],
+  }),
+  breakdance: action({
+    label: "Breakdance",
+    eyebrow: "Boombox · action 57",
+    description: "The original Boombox special dance with its matching prop timeline.",
+    group: "music",
+    tags: ["dance", "music", "boombox"],
+  }),
+  hula: action({
+    label: "Hula",
+    eyebrow: "Grass Skirt · action 32",
+    description: "The Grass Skirt follows the penguin's shared hula timeline.",
+    group: "music",
+    tags: ["dance"],
+  }),
+  maracas: action({
+    label: "Maracas",
+    eyebrow: "Pair of Maracas · action 42",
+    description: "The hand-item timeline draws both maracas over the matching body motion.",
+    group: "music",
+    tags: ["instrument", "rhythm"],
+  }),
+  guitar: action({
+    label: "Electric Guitar",
+    eyebrow: "Red Electric Guitar · action 44",
+    description: "The guitar uses Club Penguin's hand/tool depth over action 44.",
+    group: "music",
+    tags: ["instrument", "music"],
+  }),
+  jackhammer: action({
+    label: "Jackhammer",
+    eyebrow: "Hard Hat · action 36",
+    description: "The Hard Hat sprite supplies both the hat and the animated jackhammer.",
+    group: "work",
+    tags: ["tool", "construction"],
+  }),
+  pizza: action({
+    label: "Pizza Toss",
+    eyebrow: "Chef Hat + Pizza Apron · action 33",
+    description: "The apron and hat timelines complete the dough-tossing animation.",
+    group: "work",
+    tags: ["food", "cooking"],
+  }),
+  mop: action({
+    label: "Mopping",
+    eyebrow: "Mop + Bucket · action 71",
+    description: "The Mop and Bucket hand-item timeline completes the cleaning animation.",
+    group: "work",
+    tags: ["cleaning", "tool"],
+  }),
+  coffee: action({
+    label: "Serve Coffee",
+    eyebrow: "Coffee Apron · action 34",
+    description: "The Coffee Apron supplies the serving props and clothing animation.",
+    group: "work",
+    tags: ["food", "serving"],
+    mode: "one-shot",
+  }),
+  snowball: action({
+    label: "Throw Snowball",
+    eyebrow: "Snowball · cursor directed",
+    description: "Choose this, then click a target. The snowball lands there for 1.5 seconds.",
+    group: "play",
+    directions: throwDirections,
+    tags: ["projectile", "cursor-target"],
+    mode: "directed",
+    target: "playground-point",
+  }),
+  propeller: action({
+    label: "Propeller Hover",
+    eyebrow: "Red Propeller Cap · action 35",
+    description: "The cap's hover timeline is registered to the same stage origin as the body.",
+    group: "play",
+    tags: ["flight", "stunt"],
+  }),
+  swim: action({
+    label: "Tread Water",
+    eyebrow: "Water Wings · action 37",
+    description: "The Water Wings hand layer completes the swimming special action.",
+    group: "play",
+    tags: ["water", "sport"],
+  }),
+});
+
+export const DEFAULT_ACTION = "penguin";

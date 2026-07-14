@@ -1,0 +1,20 @@
+{
+  "name": "club-penguin-pet-local",
+  "interface": {
+    "displayName": "Club Penguin Pet (Local)"
+  },
+  "plugins": [
+    {
+      "name": "club-penguin-pet",
+      "source": {
+        "source": "local",
+        "path": "./plugins/club-penguin-pet"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

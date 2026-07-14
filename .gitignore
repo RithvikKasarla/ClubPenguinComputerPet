@@ -1,0 +1,12 @@
+generated/
+.cache/
+.superpowers/
+node_modules/
+dist/
+assets/**/*.swf
+assets/penguin-old-blue.png
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example

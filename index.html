@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Club Penguin Action Lab</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./src/viewer.mjs?v=20260714-single-clock"></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <div>
+          <p class="kicker">Deterministic composition study</p>
+          <h1>Action Lab</h1>
+        </div>
+        <div class="status"><span></span> Single-clock canvas</div>
+      </header>
+
+      <section class="workspace">
+        <aside class="panel controls-panel">
+          <div class="panel-heading">
+            <span>Timeline</span>
+            <span class="panel-number">01</span>
+          </div>
+          <nav id="action-list" aria-label="Choose an animation"></nav>
+          <div class="technical-note">
+            <span>Composition</span>
+            <strong id="layer-count">0 layers</strong>
+          </div>
+        </aside>
+
+        <section class="preview-column">
+          <div class="stage-wrap">
+            <div id="stage" aria-label="Interactive penguin playground">
+              <div id="pet-actor" aria-hidden="true"></div>
+              <div id="pet-effects" aria-hidden="true"></div>
+              <p id="target-hint" role="status">Click a location to choose a target</p>
+            </div>
+            <div class="stage-grid" aria-hidden="true"></div>
+            <div class="stage-corner top-left"></div>
+            <div class="stage-corner top-right"></div>
+            <div class="stage-corner bottom-left"></div>
+            <div class="stage-corner bottom-right"></div>
+          </div>
+          <div class="caption-row">
+            <div>
+              <p id="action-eyebrow" class="kicker"></p>
+              <h2 id="action-title"></h2>
+            </div>
+            <p id="action-description" class="description"></p>
+          </div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "club-penguin-pet-swf-viewer",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "npm run setup:assets && npm run setup:exporter && npm run build:swfs && npm run build:frames && npm run verify:render",
+    "setup:assets": "node scripts/fetch-club-penguin-assets.mjs",
+    "setup:exporter": "bash scripts/build-ruffle-exporter.sh",
+    "build:swfs": "node scripts/build-expanded-swfs.mjs",
+    "build:frames": "node scripts/build-render-frames.mjs",
+    "verify:render": "node scripts/verify-render-goldens.mjs",
+    "desktop": "bash desktop/run-x11.sh",
+    "desktop:shortcuts:install": "node desktop/configure-gnome-shortcuts.mjs",
+    "desktop:shortcuts:remove": "node desktop/configure-gnome-shortcuts.mjs --remove",
+    "test:desktop": "node --test desktop/*.test.mjs plugins/*/hooks/*.test.mjs",
+    "serve": "python3 -m http.server 4173",
+    "test": "node --test tests/*.test.mjs desktop/*.test.mjs plugins/*/hooks/*.test.mjs"
+  },
+  "devDependencies": {
+    "electron": "^42.1.0",
+    "pngjs": "^7.0.0"
+  }
+}

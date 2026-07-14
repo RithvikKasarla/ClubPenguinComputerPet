@@ -1,0 +1,14 @@
+diff --git a/exporter/src/exporter.rs b/exporter/src/exporter.rs
+--- a/exporter/src/exporter.rs
++++ b/exporter/src/exporter.rs
+@@ -68,6 +68,10 @@ impl Exporter {
+             .with_movie(movie)
+             .with_viewport_dimensions(width, height, self.size.scale)
+             .build();
++        player
++            .lock()
++            .unwrap()
++            .set_window_mode("transparent");
+ 
+         Ok(MovieExport {
+             player,
