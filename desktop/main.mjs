@@ -34,6 +34,7 @@ import {
   initialPetInputBounds,
   petInputBounds,
 } from "./pet-input-window.mjs";
+import { uniformActorMenuItems } from "./pet-menu-policy.mjs";
 import { ACTION_GROUPS, ACTIONS } from "../src/actions.mjs";
 
 const desktopDirectory = path.dirname(fileURLToPath(import.meta.url));
@@ -197,7 +198,7 @@ function petMenuItems() {
       submenu: actionsMenuItems(),
     },
     { type: "separator" },
-    { label: "Quit Penguin", click: () => app.quit() },
+    { id: "quit", label: "Quit Penguin", click: () => app.quit() },
   ];
 }
 
@@ -214,7 +215,7 @@ function rebuildMenus() {
 
 function showPetContextMenu() {
   if (!tucked) {
-    trayMenu = Menu.buildFromTemplate(petMenuItems());
+    trayMenu = Menu.buildFromTemplate(uniformActorMenuItems(petMenuItems()));
     trayMenu.popup({ window: petInputWindow ?? overlayWindow });
   }
 }
